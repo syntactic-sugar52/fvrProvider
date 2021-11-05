@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "224615557157",
+    "firebase_url": "https://fvr2-c6996-default-rtdb.firebaseio.com",
+    "project_id": "fvr2-c6996",
+    "storage_bucket": "fvr2-c6996.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224615557157:android:c918ebea483b1ee56577cc",
+        "android_client_info": {
+          "package_name": "com.f.favr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224615557157-v4c8gta7pt57p59m75q1r8rts07cssaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL3YJqQVfcPOawCSRN4d7eeBx3pPEMxtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224615557157-v4c8gta7pt57p59m75q1r8rts07cssaj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "224615557157-53n8n9rqsqei9eb7satf3gdmoohrn0ar.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.f.favr"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224615557157:android:67a633ada148bab36577cc",
+        "android_client_info": {
+          "package_name": "com.f.favrProvider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224615557157-v4c8gta7pt57p59m75q1r8rts07cssaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL3YJqQVfcPOawCSRN4d7eeBx3pPEMxtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224615557157-v4c8gta7pt57p59m75q1r8rts07cssaj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "224615557157-53n8n9rqsqei9eb7satf3gdmoohrn0ar.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.f.favr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>224615557157-tri5kv5an5v7bb1m1vkrr67g0lv8dotj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.224615557157-tri5kv5an5v7bb1m1vkrr67g0lv8dotj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBc3khBmx08aBtLo6xhpli6Sjow8sYCTe4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>224615557157</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.f.favrProvider</string>
+	<key>PROJECT_ID</key>
+	<string>fvr2-c6996</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fvr2-c6996.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:224615557157:ios:9b9c3abe6297d5c76577cc</string>
+	<key>DATABASE_URL</key>
+	<string>https://fvr2-c6996-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
