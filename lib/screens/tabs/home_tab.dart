@@ -8,6 +8,7 @@ import 'package:fprovider_app/constants/colors.dart';
 import 'package:fprovider_app/constants/widgets.dart';
 import 'package:fprovider_app/models/favrProviders.dart';
 import 'package:fprovider_app/screens/notification/push_notification_service.dart';
+import 'package:fprovider_app/services/methods.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../main.dart';
@@ -27,8 +28,6 @@ class _HomeTabState extends State<HomeTab> {
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
   GoogleMapController _newGoogleMapController;
-
-  Position currentPosition;
 
   var geoLocator = Geolocator();
 
@@ -57,6 +56,58 @@ class _HomeTabState extends State<HomeTab> {
     // String address = await Methods.searchCoordinateAddress(position, context);
   }
 
+  getRating() {
+    //update ratings
+    providerRef
+        .child(currentFirebaseUser.uid)
+        .child("rating")
+        .once()
+        .then((DataSnapshot snapshot) {
+      if (snapshot.value != null) {
+        double ratings = double.parse(snapshot.value.toString());
+        setState(() {
+          starCounter = ratings;
+        });
+        if (starCounter <= 1.5) {
+          setState(() {
+            title = "Very Bad";
+          });
+
+          return;
+        }
+        if (starCounter <= 2.5) {
+          setState(() {
+            title = "Bad";
+          });
+
+          return;
+        }
+        if (starCounter <= 3.5) {
+          setState(() {
+            title = "Good";
+          });
+
+          return;
+        }
+        if (starCounter <= 4.5) {
+          setState(() {
+            title = "Very Good";
+          });
+
+          return;
+        }
+
+        if (starCounter <= 5.5) {
+          setState(() {
+            title = "Excellent";
+          });
+
+          return;
+        }
+      }
+    });
+  }
+
   void getCurrentProviderInfo() async {
     currentFirebaseUser = await FirebaseAuth.instance.currentUser;
 
@@ -71,6 +122,8 @@ class _HomeTabState extends State<HomeTab> {
     PushNotificationService pushNotificationService = PushNotificationService();
     pushNotificationService.initialize(context);
     pushNotificationService.getToken();
+    Methods.retrieveHistoryInfo(context);
+    getRating();
   }
 
   @override

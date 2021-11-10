@@ -374,6 +374,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "smooth_star_rating",
+      "rootUri": "file:///Users/kdang/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/smooth_star_rating-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "source_span",
       "rootUri": "file:///Users/kdang/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1",
       "packageUri": "lib/",
@@ -446,7 +452,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-11-05T08:26:06.837357Z",
+  "generated": "2021-11-08T08:47:42.877592Z",
   "generator": "pub",
   "generatorVersion": "2.14.4"
 }

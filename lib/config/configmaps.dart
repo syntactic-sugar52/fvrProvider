@@ -13,3 +13,5 @@ StreamSubscription<Position> homeTabSubscription;
 StreamSubscription<Position> providerSubscription;
 Position currentPosition;
 FavrProviders favrProvidersInfo;
+String title = '';
+double starCounter = 0.0;

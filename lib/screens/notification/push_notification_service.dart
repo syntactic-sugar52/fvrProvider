@@ -42,7 +42,6 @@ class PushNotificationService {
     String rideRequestId = '';
     if (Platform.isAndroid) {
       print('ride request');
-
       rideRequestId = message['data']['ride_request_id'];
       print(rideRequestId);
     } else {
@@ -76,17 +75,17 @@ class PushNotificationService {
         FavrDetails favrDetails = FavrDetails();
         favrDetails.details = pickupDetails;
         favrDetails.rideRequestId = rideRequestId;
-        favrDetails.pickup_address = pickupAddress;
-        favrDetails.dropoff_address = dropOffAddress;
+        favrDetails.pickupaddress = pickupAddress;
+        favrDetails.dropoffAddress = dropOffAddress;
         favrDetails.pickup = LatLng(pickupLocationLat, pickupLocationLong);
         favrDetails.dropoff = LatLng(dropOffLocationLat, dropOffLocationLong);
-        favrDetails.payment_method = paymentMethod;
-        favrDetails.favr_owner_name = fproviderName;
-        favrDetails.favr_owner_phone = fproviderPhone;
+        favrDetails.paymentMethod = paymentMethod;
+        favrDetails.favrOwnerName = fproviderName;
+        favrDetails.favrOwnerPhone = fproviderPhone;
         print('info');
         print(favrDetails.details);
-        print(favrDetails.pickup_address);
-        print(favrDetails.dropoff_address);
+        print(favrDetails.pickupaddress);
+        print(favrDetails.dropoffAddress);
         showDialog(
             context: context,
             barrierDismissible: false,

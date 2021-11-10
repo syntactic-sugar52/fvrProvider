@@ -48,14 +48,14 @@ class _MainScreenState extends State<MainScreen>
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: [HomeTab(), RatingTab(), EarningsTab(), ProfileTab()],
+        children: [HomeTab(), EarningsTab(), RatingTab(), ProfileTab()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 1,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card), label: "Earnings"),
+              icon: Icon(Icons.credit_card), label: "Profit"),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: "Rating"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account")
         ],

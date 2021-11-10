@@ -24,6 +24,6 @@ class FavrProviders {
     name = dataSnapshot.value['name'];
     carColor = dataSnapshot.value['car_details']['car_color'];
     carModel = dataSnapshot.value['car_details']['car_model'];
-    carNumber = dataSnapshot.value['car_details']['car_color'];
+    carNumber = dataSnapshot.value['car_details']['car_number'];
   }
 }

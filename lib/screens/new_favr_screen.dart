@@ -44,15 +44,23 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
   Set<Circle> circleSet = Set<Circle>();
   Set<Polyline> polylineSet = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
+
   PolylinePoints polylinePoints = PolylinePoints();
-  Position fPosition;
+
+  Position fPosition = Position();
+
   var geoLocator = Geolocator();
+
   bool isRequestingDirections = false;
+
   String durationProvider = '';
   Timer timer;
+
   int durationCounter = 0;
+
   var locationOptions =
       LocationOptions(accuracy: LocationAccuracy.bestForNavigation);
+
   BitmapDescriptor animatingMarkerIcon;
 
   void createIconMarker() {
@@ -68,28 +76,31 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     LatLng oldPos = LatLng(0, 0);
     providerSubscription =
         Geolocator.getPositionStream().listen((Position position) {
+      // setState(() {
       currentPosition = position;
       fPosition = position;
+      // });
 
-      LatLng fpPosition = LatLng(position.latitude, position.longitude);
+      print(position);
+      LatLng mPosition = LatLng(position.latitude, position.longitude);
       var rot = MapsToolKit.getMarkerRotaion(oldPos.latitude, oldPos.longitude,
           fPosition.latitude, fPosition.longitude);
       Marker animatedMarker = Marker(
           markerId: MarkerId("animating"),
-          position: fpPosition,
+          position: mPosition,
           rotation: rot,
           icon: animatingMarkerIcon,
           infoWindow: InfoWindow(title: "Current Location"));
       setState(() {
         CameraPosition cameraPosition =
-            CameraPosition(target: fpPosition, zoom: 17);
+            CameraPosition(target: mPosition, zoom: 17);
         _newFavrGoogleMapController
             .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
         markerSet.removeWhere((marker) => marker.markerId.value == "animating");
         markerSet.add(animatedMarker);
       });
 
-      oldPos = fpPosition;
+      oldPos = mPosition;
       updateRideDetails();
       String rideRequestId = widget.favrDetails.rideRequestId;
       Map locMap = {
@@ -118,8 +129,8 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
             padding: EdgeInsets.only(bottom: 500),
             mapType: MapType.normal,
             myLocationEnabled: true,
-            // zoomGesturesEnabled: true,
-            // zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
             polylines: polylineSet,
             markers: markerSet,
             circles: circleSet,
@@ -159,7 +170,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.favrDetails.favr_owner_name,
+                            widget.favrDetails.favrOwnerName,
                             style: TextStyle(
                                 fontSize: 24.0, fontWeight: FontWeight.w700),
                           ),
@@ -175,7 +186,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                           Expanded(
                               child: Container(
                             child: Text(
-                              widget.favrDetails.pickup_address,
+                              widget.favrDetails.pickupaddress,
                               style: TextStyle(
                                   fontSize: 18.0,
                                   overflow: TextOverflow.ellipsis),
@@ -189,7 +200,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                           Expanded(
                               child: Container(
                             child: Text(
-                              widget.favrDetails.dropoff_address,
+                              widget.favrDetails.dropoffAddress,
                               style: TextStyle(
                                   fontSize: 18.0,
                                   overflow: TextOverflow.ellipsis),
@@ -311,9 +322,6 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
 
     var details =
         await Methods.obtainDirectionDetails(pickupLapLang, dropOffLapLang);
-    // setState(() {
-    //   tripDirectionDetails = details;
-    // });
 
     Navigator.pop(context);
     print(details.encodedPoints);
@@ -343,6 +351,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
       polylineSet.add(polyline);
     });
     LatLngBounds latLngBounds;
+
     if (pickupLapLang.latitude > dropOffLapLang.latitude &&
         pickupLapLang.longitude > dropOffLapLang.longitude) {
       latLngBounds =
@@ -403,16 +412,17 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     newRequestRef.child(rideRequestId).child("status").set("accepted");
     newRequestRef
         .child(rideRequestId)
-        .child("fProvider_name")
+        .child("fprovider_name")
         .set(favrProvidersInfo.name);
     newRequestRef
         .child(rideRequestId)
-        .child("fProvider_phone")
+        .child("fprovider_phone")
         .set(favrProvidersInfo.phone);
     newRequestRef
         .child(rideRequestId)
-        .child("fProvider_id")
+        .child("fprovider_id")
         .set(favrProvidersInfo.id);
+
     newRequestRef.child(rideRequestId).child("car_details").set(
         '${favrProvidersInfo.carModel} -  ${favrProvidersInfo.carColor} - ${favrProvidersInfo.carNumber}');
 
@@ -486,7 +496,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     showDialog(
         context: context,
         builder: (BuildContext context) => CollectFareDialog(
-              paymentMethod: widget.favrDetails.payment_method,
+              paymentMethod: widget.favrDetails.paymentMethod,
               fareAmount: fareAmount,
             ));
     saveEarnings(fareAmount);

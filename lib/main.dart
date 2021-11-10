@@ -28,11 +28,13 @@ void main() async {
 //     FirebaseDatabase.instance.reference().child('users');
 DatabaseReference providerRef =
     FirebaseDatabase.instance.reference().child('fprovider');
+
 DatabaseReference requestRef = FirebaseDatabase.instance
     .reference()
     .child("fprovider")
     .child(currentFirebaseUser.uid)
     .child("newRequest");
+
 DatabaseReference newRequestRef =
     FirebaseDatabase.instance.reference().child("Favr Requests");
 

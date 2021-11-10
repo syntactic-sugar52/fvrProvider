@@ -65,7 +65,7 @@ class NotificationDialog extends StatelessWidget {
                       Expanded(
                         child: Container(
                           child: Text(
-                            favrDetails.pickup_address,
+                            favrDetails.pickupaddress,
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ),
@@ -83,7 +83,7 @@ class NotificationDialog extends StatelessWidget {
                       Expanded(
                         child: Container(
                           child: Text(
-                            favrDetails.dropoff_address,
+                            favrDetails.dropoffAddress,
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ),
@@ -107,40 +107,40 @@ class NotificationDialog extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.pink)),
-                    color: Colors.white,
-                    textColor: Colors.red,
+                    color: Colors.pink,
+                    textColor: Colors.white,
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Cancel".toUpperCase(),
                       style: TextStyle(fontSize: 14.0),
                     ),
-                  )
-                ],
-              ),
-            ),
-            sizedBox(0.0, 10.0),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  RaisedButton(
-                    onPressed: () {
-                      checkAvailability(context);
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: kPrimaryMint)),
-                    color: Colors.white,
-                    textColor: Colors.red,
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Accept".toUpperCase(),
-                      style: TextStyle(fontSize: 14.0),
+                  ),
+                  sizedBox(0.0, 10.0),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      children: [
+                        RaisedButton(
+                          onPressed: () {
+                            checkAvailability(context);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: kPrimaryMint)),
+                          color: kPrimaryMint,
+                          textColor: Colors.white,
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Accept".toUpperCase(),
+                            style: TextStyle(fontSize: 14.0),
+                          ),
+                        )
+                      ],
                     ),
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -165,11 +165,14 @@ class NotificationDialog extends StatelessWidget {
                 builder: (context) => NewFavrScreen(
                       favrDetails: favrDetails,
                     )));
-      } else if (reqId == "canceled") {
+      } else if (reqId == "cancelled") {
         displayToastMessage("Favr has been Cancelled");
       } else if (reqId == "timeout") {
         displayToastMessage("Favr has Timed Out");
       } else {
+        print(reqId.toString());
+        print("1");
+        print(favrDetails.rideRequestId);
         displayToastMessage("Favr no longer exists");
       }
     });

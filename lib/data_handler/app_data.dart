@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:fprovider_app/models/address.dart';
+import 'package:fprovider_app/models/favrHistory.dart';
 
 class AppData extends ChangeNotifier {
-  Address pickupLocation;
-  Address dropOffLocation;
-  void updatePickUpLocationAddress(Address pickupAddress) {
-    pickupLocation = pickupAddress;
+  String earnings = "0";
+  int favrCount = 0;
+  List<String> favrHistoryKeys = [];
+  List<FavrHistory> favrHistoryDataList = [];
+  void updateEarnings(String updatedEarnings) {
+    earnings = updatedEarnings;
     notifyListeners();
   }
 
-  void updateDropOffLocation(Address dropOffLocationAddress) {
-    dropOffLocation = dropOffLocationAddress;
+  void updateFavrCounter(int favrCounter) {
+    favrCount = favrCounter;
+    notifyListeners();
+  }
+
+  void updateFavrKeys(List<String> newkeys) {
+    favrHistoryKeys = newkeys;
+    notifyListeners();
+  }
+
+  void updateFavrHistoryData(FavrHistory history) {
+    favrHistoryDataList.add(history);
     notifyListeners();
   }
 }
