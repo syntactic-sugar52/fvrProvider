@@ -60,10 +60,12 @@ class CollectFareDialog extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pop(context);
                   Methods.enableHomeTabLiveLocationUpdates();
                 },
               ),
             ),
+            sizedBox(15, 0.0)
           ],
         ),
       ),

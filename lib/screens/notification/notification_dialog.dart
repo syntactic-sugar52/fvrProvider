@@ -6,6 +6,7 @@ import 'package:fprovider_app/main.dart';
 import 'package:fprovider_app/models/favr_details.dart';
 import 'package:fprovider_app/screens/new_favr_screen.dart';
 import 'package:fprovider_app/services/methods.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationDialog extends StatelessWidget {
   final FavrDetails favrDetails;
@@ -101,9 +102,12 @@ class NotificationDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.pink)),
@@ -141,6 +145,7 @@ class NotificationDialog extends StatelessWidget {
                 ],
               ),
             ),
+            sizedBox(15, 0.0)
           ],
         ),
       ),
@@ -157,7 +162,10 @@ class NotificationDialog extends StatelessWidget {
         displayToastMessage("Favr no longer exists");
       }
       if (reqId == favrDetails.rideRequestId) {
+        print('reqId checkAvail');
+        print(reqId);
         requestRef.set("accepted");
+        // prefs.setBool('checkAvailability', true);
         Methods.disableHomeTabLiveLocationUpdates();
         Navigator.push(
             context,
@@ -166,13 +174,13 @@ class NotificationDialog extends StatelessWidget {
                       favrDetails: favrDetails,
                     )));
       } else if (reqId == "cancelled") {
+        // prefs.setBool('checkAvailability', false);
         displayToastMessage("Favr has been Cancelled");
       } else if (reqId == "timeout") {
+        // prefs.setBool('checkAvailability', false);
         displayToastMessage("Favr has Timed Out");
       } else {
-        print(reqId.toString());
-        print("1");
-        print(favrDetails.rideRequestId);
+        // prefs.setBool('checkAvailability', false);
         displayToastMessage("Favr no longer exists");
       }
     });

@@ -144,7 +144,7 @@ class CarInfoScreen extends StatelessWidget {
                           } else if (carColorController.text.isEmpty) {
                             displayToastMessage("Enter Vehicle Color");
                           } else {
-                            saveCarInfo(context);
+                            // saveCarInfo(context);
                           }
                         },
                       ),
@@ -159,15 +159,15 @@ class CarInfoScreen extends StatelessWidget {
     );
   }
 
-  void saveCarInfo(context) {
-    String userId = currentFirebaseUser.uid;
-    Map carInfoMap = {
-      "car_color": carColorController.text.trim(),
-      "car_model": carModelController.text.trim(),
-      "car_number": carNumberController.text.trim()
-    };
-    providerRef.child(userId).child("car_details").set(carInfoMap);
-    Navigator.pushNamedAndRemoveUntil(
-        context, MainScreen.idScreen, (route) => false);
-  }
+  // void saveCarInfo(context) {
+  //   String userId = currentFirebaseUser.uid;
+  //   Map carInfoMap = {
+  //     "car_color": carColorController.text.trim(),
+  //     "car_model": carModelController.text.trim(),
+  //     "car_number": carNumberController.text.trim()
+  //   };
+  //   providerRef.child(userId).child("car_details").set(carInfoMap);
+  //   Navigator.pushNamedAndRemoveUntil(
+  //       context, MainScreen.idScreen, (route) => false);
+  // }
 }

@@ -5,14 +5,16 @@ class FavrProviders {
   String phone;
   String email;
   String id;
-  String carColor;
-  String carModel;
-  String carNumber;
+  String rating;
+  // String carColor;
+  // String carModel;
+  // String carNumber;
   FavrProviders(
       {this.name,
-      this.carColor,
-      this.carModel,
-      this.carNumber,
+      // this.carColor,
+      // this.carModel,
+      // this.carNumber,
+      this.rating,
       this.email,
       this.id,
       this.phone});
@@ -22,8 +24,9 @@ class FavrProviders {
     phone = dataSnapshot.value['phone'];
     email = dataSnapshot.value['email'];
     name = dataSnapshot.value['name'];
-    carColor = dataSnapshot.value['car_details']['car_color'];
-    carModel = dataSnapshot.value['car_details']['car_model'];
-    carNumber = dataSnapshot.value['car_details']['car_number'];
+    rating = dataSnapshot.value['ratings'];
+    // carColor = dataSnapshot.value['car_details']['car_color'];
+    // carModel = dataSnapshot.value['car_details']['car_model'];
+    // carNumber = dataSnapshot.value['car_details']['car_number'];
   }
 }

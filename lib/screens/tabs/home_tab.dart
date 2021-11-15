@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fprovider_app/config/configmaps.dart';
@@ -11,6 +12,7 @@ import 'package:fprovider_app/screens/notification/push_notification_service.dar
 import 'package:fprovider_app/services/methods.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 
 class HomeTab extends StatefulWidget {
@@ -26,9 +28,10 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
-
+  bool state = false;
   GoogleMapController _newGoogleMapController;
-
+  bool val = false;
+  String textValStatus = '';
   var geoLocator = Geolocator();
 
   String providerStatusText = "Offline";
@@ -41,7 +44,16 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    sharedPrefState();
+    // providerStatusText = prefs.getString('providerStatusText');
     getCurrentProviderInfo();
+  }
+
+  sharedPrefState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      state = prefs.getBool('isProviderAvailable') ?? false;
+    });
   }
 
   void locatePosition() async {
@@ -53,14 +65,13 @@ class _HomeTabState extends State<HomeTab> {
         CameraPosition(target: latLngPosition, zoom: 14);
     _newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    // String address = await Methods.searchCoordinateAddress(position, context);
   }
 
   getRating() {
     //update ratings
     providerRef
         .child(currentFirebaseUser.uid)
-        .child("rating")
+        .child("ratings")
         .once()
         .then((DataSnapshot snapshot) {
       if (snapshot.value != null) {
@@ -135,11 +146,8 @@ class _HomeTabState extends State<HomeTab> {
           // padding: EdgeInsets.only(bottom: 550),
           mapType: MapType.normal,
           myLocationEnabled: true,
-          // zoomGesturesEnabled: true,
-          // zoomControlsEnabled: true,
-          // polylines: polyLineSet,
-          // markers: markerSet,
-          // circles: circleSet,
+          zoomGesturesEnabled: true,
+          zoomControlsEnabled: true,
           myLocationButtonEnabled: true,
           initialCameraPosition: HomeTab._kGooglePlex,
           onMapCreated: (GoogleMapController controller) {
@@ -161,45 +169,55 @@ class _HomeTabState extends State<HomeTab> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    if (isProviderAvailable != true) {
-                      makeDriverOnline();
-                      getLocationLiveUpdates();
-                      setState(() {
-                        providerStatusColor = kPrimaryMint;
-                        providerStatusText = "Online ";
-                        isProviderAvailable = true;
-                      });
-                      displayToastMessage("You are Online");
-                    } else {
-                      makeDriverOffline();
-                      setState(() {
-                        providerStatusColor = Colors.blueGrey;
-                        providerStatusText = "Offline ";
-                        isProviderAvailable = false;
-                      });
-                    }
-                  },
-                  color: providerStatusColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(17.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          providerStatusText,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Icon(Icons.online_prediction, color: Colors.white)
-                      ],
+                padding: const EdgeInsets.all(17.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      state ? "Online" : "Offline",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w700),
                     ),
-                  ),
+                    Icon(Icons.online_prediction, color: Colors.white)
+                  ],
                 ),
+              ),
+              CupertinoSwitch(
+                value: state,
+                onChanged: (value) {
+                  setState(() {
+                    state = value;
+                  });
+                  print(state);
+                  if (state != true) {
+                    print('state is false');
+                    makeDriverOffline();
+                    setState(() {
+                      providerStatusColor = Colors.blueGrey;
+                      providerStatusText = "Offline ";
+                      state = false;
+                      isProviderAvailable = false;
+                      prefs.setBool('isProviderAvailable', false);
+                      prefs.setString('providerStatusText', "Offline ");
+                    });
+                    displayToastMessage("You are Offline");
+                  } else {
+                    print('state is true');
+                    makeDriverOnline();
+                    getLocationLiveUpdates();
+                    setState(() {
+                      providerStatusColor = kPrimaryMint;
+                      providerStatusText = "Online ";
+                      state = true;
+                      isProviderAvailable = true;
+                      prefs.setBool('isProviderAvailable', true);
+                      prefs.setString('providerStatusText', "Online ");
+                    });
+                    displayToastMessage("You are Online");
+                  }
+                },
               ),
             ],
           ),
@@ -214,9 +232,11 @@ class _HomeTabState extends State<HomeTab> {
     currentPosition = position;
     Geofire.initialize("availableProviders");
     Geofire.setLocation(currentFirebaseUser.uid, currentPosition.latitude,
-        currentPosition.longitude);
-    requestRef.set('searching');
-    requestRef.onValue.listen((event) {});
+            currentPosition.longitude)
+        .whenComplete(() {
+      requestRef.set('searching');
+      requestRef.onValue.listen((event) {});
+    });
   }
 
   void getLocationLiveUpdates() {
@@ -233,10 +253,10 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void makeDriverOffline() {
-    Geofire.removeLocation(currentFirebaseUser.uid);
-    requestRef.onDisconnect();
-    requestRef.remove();
-    requestRef = null;
-    displayToastMessage("You are Offline");
+    Geofire.removeLocation(currentFirebaseUser.uid).whenComplete(() {
+      requestRef.onDisconnect();
+      requestRef.remove();
+      displayToastMessage("You are Offline");
+    });
   }
 }

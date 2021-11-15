@@ -19,6 +19,7 @@ import 'package:fprovider_app/utils/progress_dialog.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewFavrScreen extends StatefulWidget {
   final FavrDetails favrDetails;
@@ -39,7 +40,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
   String status = "accepted";
   GoogleMapController _newFavrGoogleMapController;
   Set<Marker> markerSet = Set<Marker>();
-  String btnTitle = 'Arrived';
+  String btnTitle = 'ARRIVED';
   Color btnColor = kPrimaryGreen;
   Set<Circle> circleSet = Set<Circle>();
   Set<Polyline> polylineSet = Set<Polyline>();
@@ -47,9 +48,9 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
 
   PolylinePoints polylinePoints = PolylinePoints();
 
-  Position fPosition = Position();
+  Position fPosition; //!fix null
 
-  var geoLocator = Geolocator();
+  // Geolocator geoLocator = Geolocator();
 
   bool isRequestingDirections = false;
 
@@ -57,9 +58,6 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
   Timer timer;
 
   int durationCounter = 0;
-
-  var locationOptions =
-      LocationOptions(accuracy: LocationAccuracy.bestForNavigation);
 
   BitmapDescriptor animatingMarkerIcon;
 
@@ -76,12 +74,12 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     LatLng oldPos = LatLng(0, 0);
     providerSubscription =
         Geolocator.getPositionStream().listen((Position position) {
-      // setState(() {
-      currentPosition = position;
-      fPosition = position;
-      // });
+      print(position.latitude);
+      setState(() {
+        currentPosition = position;
+        fPosition = position;
+      });
 
-      print(position);
       LatLng mPosition = LatLng(position.latitude, position.longitude);
       var rot = MapsToolKit.getMarkerRotaion(oldPos.latitude, oldPos.longitude,
           fPosition.latitude, fPosition.longitude);
@@ -123,6 +121,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     // createIconMarker();
     return Scaffold(
       backgroundColor: kPrimaryWhite,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           GoogleMap(
@@ -148,24 +147,23 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
           ),
           Positioned(
             bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
+            left: 8.0,
+            right: 8.0,
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16.0),
                       topRight: Radius.circular(16.0))),
-              height: MediaQuery.of(context).size.height / 2,
-              child: SingleChildScrollView(
-                child: Padding(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: ListView(physics: ClampingScrollPhysics(), children: [
+                Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 18.0),
                   child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //remove?
-                      Text(durationProvider),
-                      sizedBox(6.0, 0.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -180,55 +178,99 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                           ),
                         ],
                       ),
-                      sizedBox(26.0, 0.0),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            child: Text(
-                              widget.favrDetails.pickupaddress,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ))
-                        ],
+                      sizedBox(10.0, 0.0),
+                      Divider(
+                        color: Colors.grey,
                       ),
                       sizedBox(26.0, 0.0),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            child: Text(
-                              widget.favrDetails.dropoffAddress,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ))
-                        ],
+                      Text(
+                        "The Password: ",
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w600),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            child: Text(
-                              widget.favrDetails.details,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          )),
-                        ],
+                      sizedBox(10.0, 0.0),
+                      Container(
+                        child: Text(
+                          widget.favrDetails.passwordFavr,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                      sizedBox(18.0, 0.0),
+                      Divider(
+                        color: Colors.grey,
+                      ),
+                      sizedBox(26.0, 0.0),
+                      Text(
+                        "Start Here: ",
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w600),
+                      ),
+                      sizedBox(10.0, 0.0),
+                      Container(
+                        child: Text(
+                          widget.favrDetails.pickupaddress,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                      sizedBox(18.0, 0.0),
+                      Divider(
+                        color: Colors.grey,
+                      ),
+                      sizedBox(26.0, 0.0),
+                      Text(
+                        "End Here: ",
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w600),
+                      ),
+                      sizedBox(10.0, 0.0),
+                      Container(
+                        child: Text(
+                          widget.favrDetails.dropoffAddress,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                      sizedBox(18.0, 0.0),
+                      Divider(
+                        color: Colors.grey,
+                      ),
+                      sizedBox(26.0, 0.0),
+                      Text(
+                        "The Task: ",
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w600),
+                      ),
+                      sizedBox(10.0, 0.0),
+                      Container(
+                        child: Text(
+                          widget.favrDetails.details,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                      sizedBox(26.0, 0.0),
+                      Divider(
+                        color: Colors.grey,
                       ),
                       sizedBox(26.0, 0.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: RaisedButton(
+                          Container(
+                            // padding: const EdgeInsets.symmetric(
+                            //     horizontal: 26.0, vertical: 10),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: ElevatedButton(
                               onPressed: () async {
                                 if (status == "accepted") {
                                   status = "arrived";
@@ -254,7 +296,10 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                                       widget.favrDetails.dropoff);
                                   Navigator.pop(context);
                                 } else if (status == "arrived") {
-                                  status = "onride";
+                                  setState(() {
+                                    status = "onride";
+                                  });
+
                                   String rideRequestId =
                                       widget.favrDetails.rideRequestId;
                                   newRequestRef
@@ -281,22 +326,24 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                                   endFavr();
                                 }
                               },
-                              color: btnColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(17.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      btnTitle,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
+                              style: ButtonStyle(
+                                  shadowColor:
+                                      MaterialStateProperty.all(Colors.grey),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(btnColor)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    btnTitle.toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 22.0,
+                                        letterSpacing: 1,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -305,9 +352,9 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                     ],
                   ),
                 ),
-              ),
+              ]),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -320,95 +367,103 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
         builder: (BuildContext context) =>
             ProgressDialog(message: "Please wait.."));
 
-    var details =
-        await Methods.obtainDirectionDetails(pickupLapLang, dropOffLapLang);
+    await Methods.obtainDirectionDetails(pickupLapLang, dropOffLapLang)
+        .then((value) {
+      Navigator.pop(context);
 
-    Navigator.pop(context);
-    print(details.encodedPoints);
-
-    PolylinePoints polylinePoints = PolylinePoints();
-    List<PointLatLng> decodePolyLinePointsResult =
-        polylinePoints.decodePolyline(details.encodedPoints);
-    polylineCoordinates.clear();
-    if (decodePolyLinePointsResult.isNotEmpty) {
-      decodePolyLinePointsResult.forEach((PointLatLng pointLatLng) {
-        polylineCoordinates
-            .add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
+      PolylinePoints polylinePoints = PolylinePoints();
+      List<PointLatLng> decodePolyLinePointsResult =
+          polylinePoints.decodePolyline(value.encodedPoints);
+      polylineCoordinates.clear();
+      if (decodePolyLinePointsResult.isNotEmpty) {
+        decodePolyLinePointsResult.forEach((PointLatLng pointLatLng) {
+          polylineCoordinates
+              .add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
+        });
+      }
+      polylineSet.clear();
+      setState(() {
+        Polyline polyline = Polyline(
+          color: Colors.pink,
+          polylineId: PolylineId("PolylineId"),
+          jointType: JointType.round,
+          points: polylineCoordinates,
+          width: 5,
+          startCap: Cap.roundCap,
+          endCap: Cap.roundCap,
+          geodesic: true,
+        );
+        polylineSet.add(polyline);
       });
-    }
-    polylineSet.clear();
-    setState(() {
-      Polyline polyline = Polyline(
-        color: Colors.pink,
-        polylineId: PolylineId("PolylineId"),
-        jointType: JointType.round,
-        points: polylineCoordinates,
-        width: 5,
-        startCap: Cap.roundCap,
-        endCap: Cap.roundCap,
-        geodesic: true,
-      );
-      polylineSet.add(polyline);
+      LatLngBounds latLngBounds;
+
+      if (pickupLapLang.latitude > dropOffLapLang.latitude &&
+          pickupLapLang.longitude > dropOffLapLang.longitude) {
+        latLngBounds =
+            LatLngBounds(southwest: dropOffLapLang, northeast: pickupLapLang);
+      } else if (pickupLapLang.longitude > dropOffLapLang.longitude) {
+        latLngBounds = LatLngBounds(
+            southwest: LatLng(pickupLapLang.latitude, dropOffLapLang.longitude),
+            northeast:
+                LatLng(dropOffLapLang.latitude, pickupLapLang.longitude));
+      } else if (pickupLapLang.latitude > dropOffLapLang.latitude) {
+        latLngBounds = LatLngBounds(
+            southwest: LatLng(dropOffLapLang.latitude, pickupLapLang.longitude),
+            northeast:
+                LatLng(pickupLapLang.latitude, dropOffLapLang.longitude));
+      } else {
+        latLngBounds =
+            LatLngBounds(southwest: pickupLapLang, northeast: dropOffLapLang);
+      }
+      _newFavrGoogleMapController
+          .animateCamera(CameraUpdate.newLatLngBounds(latLngBounds, 70));
+
+      Marker pickupLocMarker = Marker(
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          position: pickupLapLang,
+          markerId: MarkerId("pickUpId"));
+      Marker dropOffLocMarker = Marker(
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose),
+          position: dropOffLapLang,
+          markerId: MarkerId("dropOffId"));
+
+      setState(() {
+        markerSet.add(pickupLocMarker);
+        markerSet.add(dropOffLocMarker);
+      });
+
+      Circle pickUpCircle = Circle(
+          fillColor: Colors.blue,
+          center: pickupLapLang,
+          radius: 12,
+          strokeWidth: 4,
+          strokeColor: Colors.blueAccent,
+          circleId: CircleId("pickUpId"));
+
+      Circle dropOffCircle = Circle(
+          fillColor: Colors.blue,
+          center: dropOffLapLang,
+          radius: 12,
+          strokeWidth: 4,
+          strokeColor: Colors.blueAccent,
+          circleId: CircleId("dropOffId"));
+
+      setState(() {
+        circleSet.add(pickUpCircle);
+        circleSet.add(dropOffCircle);
+      });
     });
-    LatLngBounds latLngBounds;
+  }
 
-    if (pickupLapLang.latitude > dropOffLapLang.latitude &&
-        pickupLapLang.longitude > dropOffLapLang.longitude) {
-      latLngBounds =
-          LatLngBounds(southwest: dropOffLapLang, northeast: pickupLapLang);
-    } else if (pickupLapLang.longitude > dropOffLapLang.longitude) {
-      latLngBounds = LatLngBounds(
-          southwest: LatLng(pickupLapLang.latitude, dropOffLapLang.longitude),
-          northeast: LatLng(dropOffLapLang.latitude, pickupLapLang.longitude));
-    } else if (pickupLapLang.latitude > dropOffLapLang.latitude) {
-      latLngBounds = LatLngBounds(
-          southwest: LatLng(dropOffLapLang.latitude, pickupLapLang.longitude),
-          northeast: LatLng(pickupLapLang.latitude, dropOffLapLang.longitude));
-    } else {
-      latLngBounds =
-          LatLngBounds(southwest: pickupLapLang, northeast: dropOffLapLang);
-    }
-    _newFavrGoogleMapController
-        .animateCamera(CameraUpdate.newLatLngBounds(latLngBounds, 70));
-
-    Marker pickupLocMarker = Marker(
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
-        position: pickupLapLang,
-        markerId: MarkerId("pickUpId"));
-    Marker dropOffLocMarker = Marker(
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-        position: dropOffLapLang,
-        markerId: MarkerId("dropOffId"));
-
-    setState(() {
-      markerSet.add(pickupLocMarker);
-      markerSet.add(dropOffLocMarker);
-    });
-
-    Circle pickUpCircle = Circle(
-        fillColor: Colors.blue,
-        center: pickupLapLang,
-        radius: 12,
-        strokeWidth: 4,
-        strokeColor: Colors.blueAccent,
-        circleId: CircleId("pickUpId"));
-
-    Circle dropOffCircle = Circle(
-        fillColor: Colors.green,
-        center: dropOffLapLang,
-        radius: 12,
-        strokeWidth: 4,
-        strokeColor: Colors.greenAccent,
-        circleId: CircleId("dropOffId"));
-
-    setState(() {
-      circleSet.add(pickUpCircle);
-      circleSet.add(dropOffCircle);
-    });
+  bool state = false;
+  sharedPrefState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    state = prefs.getBool('isAccepted') ?? false;
   }
 
   void acceptRideRequest() {
     String rideRequestId = widget.favrDetails.rideRequestId;
+    prefs.setBool('isAccepted', true);
     newRequestRef.child(rideRequestId).child("status").set("accepted");
     newRequestRef
         .child(rideRequestId)
@@ -422,9 +477,10 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
         .child(rideRequestId)
         .child("fprovider_id")
         .set(favrProvidersInfo.id);
-
-    newRequestRef.child(rideRequestId).child("car_details").set(
-        '${favrProvidersInfo.carModel} -  ${favrProvidersInfo.carColor} - ${favrProvidersInfo.carNumber}');
+    newRequestRef
+        .child(rideRequestId)
+        .child("fprovider_rating")
+        .set(favrProvidersInfo.rating);
 
     Map locMap = {
       "latitude": currentPosition.latitude.toString(),
@@ -481,7 +537,11 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
         builder: (BuildContext context) => ProgressDialog(
               message: "Please Wait...",
             ));
+    // var currentLatLng =
+    //     LatLng(currentPosition.latitude, currentPosition.longitude);
     var currentLatLng = LatLng(fPosition.latitude, fPosition.longitude);
+    print('currentLatLng');
+    print(currentLatLng);
     var directionDetails = await Methods.obtainDirectionDetails(
         widget.favrDetails.pickup, currentLatLng);
     Navigator.pop(context);

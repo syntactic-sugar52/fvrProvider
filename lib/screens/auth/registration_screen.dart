@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fprovider_app/config/configmaps.dart';
 import 'package:fprovider_app/constants/colors.dart';
 import 'package:fprovider_app/constants/widgets.dart';
+import 'package:fprovider_app/screens/mainscreen.dart';
 import 'package:fprovider_app/utils/progress_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../main.dart';
@@ -44,7 +45,7 @@ class RegistrationScreen extends StatelessWidget {
       providerRef.child(firebaseUser.uid).set(usersDataMap);
       currentFirebaseUser = firebaseUser;
       displayToastMessage('Account created');
-      Navigator.pushNamed(context, CarInfoScreen.idScreen);
+      Navigator.pushNamed(context, MainScreen.idScreen);
     } else {
       Navigator.pop(context);
       displayToastMessage('New user has not been created');

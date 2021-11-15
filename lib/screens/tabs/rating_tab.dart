@@ -51,7 +51,7 @@ class _RatingTabState extends State<RatingTab> {
                 title,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
               ),
-              sizedBox(16.0, 0.0),
+              sizedBox(22.0, 0.0),
             ],
           ),
         ),

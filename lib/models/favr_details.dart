@@ -12,7 +12,7 @@ class FavrDetails {
   String price;
   String favrOwnerName;
   String favrOwnerPhone;
-
+  String passwordFavr;
   FavrDetails(
       {this.paymentMethod,
       this.details,
@@ -24,5 +24,6 @@ class FavrDetails {
       this.pickupaddress,
       this.price,
       this.rideRequestId,
+      this.passwordFavr,
       this.time});
 }

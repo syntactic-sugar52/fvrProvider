@@ -50,6 +50,7 @@ class ProfileTab extends StatelessWidget {
                     requestRef.remove();
                     requestRef = null;
                     FirebaseAuth.instance.signOut();
+                    prefs.remove('email');
                     Navigator.pushNamedAndRemoveUntil(
                         context, LoginScreen.idScreen, (route) => false);
                   },
