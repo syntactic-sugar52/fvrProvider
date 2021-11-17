@@ -45,9 +45,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
   Set<Circle> circleSet = Set<Circle>();
   Set<Polyline> polylineSet = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
-
   PolylinePoints polylinePoints = PolylinePoints();
-
   Position fPosition; //!fix null
 
   // Geolocator geoLocator = Geolocator();

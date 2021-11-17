@@ -30,13 +30,19 @@ class LoginScreen extends StatelessWidget {
                   'FAVR',
                   style: GoogleFonts.dmSans(
                       textStyle: TextStyle(
-                          fontSize: 36,
+                          fontSize: 40,
                           color: kPrimaryGreen,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold)),
                 ),
                 sizedBox(80.0, 0.0),
-                Text("Log in as Favr Provider"),
+                Text(
+                  "Log in as Favr Provider",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1),
+                ),
                 sizedBox(40.0, 0.0),
                 SizedBox(
                   height: 50,
@@ -123,13 +129,25 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Dont have an account?"),
+                    Text(
+                      "Dont have an account?",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     TextButton(
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => RegistrationScreen())),
-                        child: Text("Register here")),
+                        child: Text(
+                          "Register here",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                              color: kPrimaryMint),
+                        )),
                   ],
                 )
               ],

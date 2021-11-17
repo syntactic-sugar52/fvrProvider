@@ -66,7 +66,7 @@ class RegistrationScreen extends StatelessWidget {
                   'FAVR',
                   style: GoogleFonts.dmSans(
                       textStyle: TextStyle(
-                          fontSize: 36,
+                          fontSize: 40,
                           color: kPrimaryGreen,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold)),
@@ -74,7 +74,10 @@ class RegistrationScreen extends StatelessWidget {
                 sizedBox(70.0, 0.0),
                 Text(
                   'Register as Favr Provider',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1),
                 ),
                 sizedBox(40.0, 0.0),
                 SizedBox(
