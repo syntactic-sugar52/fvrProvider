@@ -3,9 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fprovider_app/config/configmaps.dart';
+import 'package:fprovider_app/screens/%20helpers%20ui/detail_helper.dart';
 import 'package:fprovider_app/screens/auth/login_screen.dart';
 import 'package:fprovider_app/screens/auth/registration_screen.dart';
-import 'package:fprovider_app/screens/helpers/detail_helper.dart';
+
 import 'package:fprovider_app/screens/mainscreen.dart';
 import 'package:fprovider_app/screens/new_favr_screen.dart';
 import 'package:google_fonts/google_fonts.dart';

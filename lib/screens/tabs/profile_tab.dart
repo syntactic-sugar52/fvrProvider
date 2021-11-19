@@ -51,6 +51,7 @@ class ProfileTab extends StatelessWidget {
                     requestRef = null;
                     FirebaseAuth.instance.signOut();
                     prefs.remove('email');
+                    prefs.remove('isProviderAvailable');
                     Navigator.pushNamedAndRemoveUntil(
                         context, LoginScreen.idScreen, (route) => false);
                   },
@@ -68,7 +69,16 @@ class InfoCard extends StatelessWidget {
   final String text;
   final IconData icon;
   Function onPressed;
-  InfoCard({Key key, this.icon, this.onPressed, this.text}) : super(key: key);
+  bool isLogout;
+  Function onPressedEdit;
+  InfoCard(
+      {Key key,
+      this.icon,
+      this.onPressed,
+      this.text,
+      this.isLogout,
+      this.onPressedEdit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

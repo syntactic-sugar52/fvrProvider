@@ -174,6 +174,8 @@ class _HomeTabState extends State<HomeTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      // providerStatusText,
+                      // prefs.getString('providerStatusText'),
                       state ? "Online" : "Offline",
                       style: TextStyle(
                           color: Colors.white,
@@ -188,34 +190,17 @@ class _HomeTabState extends State<HomeTab> {
                 value: state,
                 onChanged: (value) {
                   setState(() {
+                    isProviderAvailable = value;
                     state = value;
                   });
                   print(state);
-                  if (state != true) {
-                    print('state is false');
-                    makeDriverOffline();
-                    setState(() {
-                      providerStatusColor = Colors.blueGrey;
-                      providerStatusText = "Offline ";
-                      state = false;
-                      isProviderAvailable = false;
-                      prefs.setBool('isProviderAvailable', false);
-                      prefs.setString('providerStatusText', "Offline ");
-                    });
-                    displayToastMessage("You are Offline");
-                  } else {
-                    print('state is true');
+                  if (isProviderAvailable == true) {
                     makeDriverOnline();
                     getLocationLiveUpdates();
-                    setState(() {
-                      providerStatusColor = kPrimaryMint;
-                      providerStatusText = "Online ";
-                      state = true;
-                      isProviderAvailable = true;
-                      prefs.setBool('isProviderAvailable', true);
-                      prefs.setString('providerStatusText', "Online ");
-                    });
                     displayToastMessage("You are Online");
+                  } else {
+                    makeDriverOffline();
+                    displayToastMessage("You are Offline");
                   }
                 },
               ),
@@ -234,8 +219,18 @@ class _HomeTabState extends State<HomeTab> {
     Geofire.setLocation(currentFirebaseUser.uid, currentPosition.latitude,
             currentPosition.longitude)
         .whenComplete(() {
-      requestRef.set('searching');
-      requestRef.onValue.listen((event) {});
+      setState(() {
+        providerStatusColor = kPrimaryMint;
+        providerStatusText = "Online ";
+        state = true;
+        isProviderAvailable = true;
+        prefs.setBool('isProviderAvailable', true);
+        prefs.setString('providerStatusText', "Online ");
+      });
+      if (isProviderAvailable == true) {
+        requestRef.set('searching');
+        requestRef.onValue.listen((event) {});
+      }
     });
   }
 
@@ -254,9 +249,19 @@ class _HomeTabState extends State<HomeTab> {
 
   void makeDriverOffline() {
     Geofire.removeLocation(currentFirebaseUser.uid).whenComplete(() {
-      requestRef.onDisconnect();
-      requestRef.remove();
-      displayToastMessage("You are Offline");
+      setState(() {
+        providerStatusColor = Colors.blueGrey;
+        providerStatusText = "Offline ";
+        state = false;
+        isProviderAvailable = false;
+        prefs.setBool('isProviderAvailable', false);
+        prefs.setString('providerStatusText', "Offline ");
+      });
+      if (isProviderAvailable == false) {
+        requestRef.onDisconnect();
+        requestRef.remove();
+        displayToastMessage("You are Offline");
+      }
     });
   }
 }

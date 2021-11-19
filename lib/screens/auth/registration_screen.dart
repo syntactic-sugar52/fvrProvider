@@ -40,7 +40,8 @@ class RegistrationScreen extends StatelessWidget {
         "name": nameController.text.trim(),
         "email": emailController.text.trim(),
         "phone": phoneController.text.trim(),
-        "password": pwController.text.trim()
+        "password": pwController.text.trim(),
+        // "uid": _firebaseAuth.currentUser.uid
       };
       providerRef.child(firebaseUser.uid).set(usersDataMap);
       currentFirebaseUser = firebaseUser;
@@ -79,6 +80,10 @@ class RegistrationScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1),
                 ),
+                sizedBox(20.0, 0.0),
+                Text(
+                    'Full Name, Email Address and Phone Number is required to be the'),
+                Text(' exact details used in your PayPal Account'),
                 sizedBox(40.0, 0.0),
                 SizedBox(
                   height: 50,
@@ -96,8 +101,8 @@ class RegistrationScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Full Name',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Full Name',
+                      hintStyle: TextStyle(color: Colors.black54),
                       contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       border: OutlineInputBorder(
@@ -122,8 +127,8 @@ class RegistrationScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Email',
+                      hintStyle: TextStyle(color: Colors.black54),
                       contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       border: OutlineInputBorder(
@@ -148,8 +153,8 @@ class RegistrationScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Phone Number',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Phone Number',
+                      hintStyle: TextStyle(color: Colors.black54),
                       contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       border: OutlineInputBorder(
@@ -174,8 +179,8 @@ class RegistrationScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Password',
+                      hintStyle: TextStyle(color: Colors.black54),
                       isCollapsed: false,
                       isDense: true,
                       contentPadding:
@@ -192,6 +197,7 @@ class RegistrationScreen extends StatelessWidget {
                   width: size.width * 0.9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      elevation: 4,
                       primary: kPrimaryGreen, // background
                       onPrimary: kPrimaryWhite, // foreground
                       fixedSize:

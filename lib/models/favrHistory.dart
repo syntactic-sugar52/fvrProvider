@@ -4,7 +4,7 @@ class FavrHistory {
   String paymentMethod;
   String createdAt;
   String status;
-  String fares;
+  String price;
   String dropoff;
   String details;
   String pickup;
@@ -13,7 +13,7 @@ class FavrHistory {
     this.createdAt,
     this.details,
     this.dropoff,
-    this.fares,
+    this.price,
     this.pickup,
     this.status,
   });
@@ -22,7 +22,7 @@ class FavrHistory {
     paymentMethod = snapshot.value["payment_method"];
     createdAt = snapshot.value["created_at"];
     status = snapshot.value["status"];
-    fares = snapshot.value["fares"];
+    price = snapshot.value["price"];
     pickup = snapshot.value["pickup_address"];
     dropoff = snapshot.value["dropoff_address"];
     details = snapshot.value["details"];

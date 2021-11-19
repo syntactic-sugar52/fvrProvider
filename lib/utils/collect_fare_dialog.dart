@@ -25,12 +25,15 @@ class CollectFareDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             sizedBox(22.0, 0.0),
-            Text("Payment Recieved"),
+            Text(
+              "Fee Recieved",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
             sizedBox(22.0, 0.0),
             Divider(),
             sizedBox(16.0, 0.0),
             Text(
-              "\$10",
+              "₱$fareAmount",
               style: TextStyle(
                 fontSize: 45.0,
               ),
@@ -43,6 +46,13 @@ class CollectFareDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
+            sizedBox(16.0, 0.0),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  'REPORT',
+                  style: TextStyle(fontSize: 16, letterSpacing: 1),
+                )),
             sizedBox(16.0, 0.0),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -65,7 +75,7 @@ class CollectFareDialog extends StatelessWidget {
                 },
               ),
             ),
-            sizedBox(15, 0.0)
+            sizedBox(30, 0.0)
           ],
         ),
       ),

@@ -17,36 +17,65 @@ class HistoryItem extends StatelessWidget {
           Container(
             child: Row(
               children: [
+                Text(
+                  'Start: ',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
                 Expanded(
                     child: Container(
                   child: Text(
                     favrHistory.pickup ?? '',
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 )),
                 sizedBox(0.0, 5.0),
-                Text('\$${favrHistory.fares ?? ''}')
+                Text('₱${favrHistory.price ?? ''}')
               ],
             ),
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
-            children: [Text(favrHistory.dropoff ?? '')],
+            children: [
+              Text(
+                'End: ',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              Text(
+                favrHistory.dropoff ?? '',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              )
+            ],
           ),
           sizedBox(15, 0),
+          // Row(
+          //   mainAxisSize: MainAxisSize.max,
+          //   children: [
+          //     Text(
+          //       'Details: ',
+          //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          //     ),
+          //      Text(
+          //        favrHistory.details ?? '',
+          //        overflow: TextOverflow.ellipsis,
+          //        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          //      ),
+          //   ],
+          // ),
+          Text(
+            'Details: ',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
           Container(
-            child: Row(
-              children: [
-                Expanded(
-                    child: Container(
-                  child: Text(
-                    favrHistory.details ?? '',
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )),
-              ],
+            child: Text(
+              favrHistory.details ?? '',
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ),
+
           sizedBox(15, 0),
           Text(
             Methods.formatFavrDate(favrHistory.createdAt ?? ''),

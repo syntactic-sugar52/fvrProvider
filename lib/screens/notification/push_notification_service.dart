@@ -70,6 +70,7 @@ class PushNotificationService {
         String fproviderName = dataSnapshot.value['favr_owner_name'];
         String fproviderPhone = dataSnapshot.value['favr_owner_phone'];
         String pwFavr = dataSnapshot.value['passwordFavr'];
+        String price = dataSnapshot.value['price'];
         FavrDetails favrDetails = FavrDetails();
         favrDetails.details = pickupDetails;
         favrDetails.rideRequestId = rideRequestId;
@@ -81,6 +82,7 @@ class PushNotificationService {
         favrDetails.favrOwnerName = fproviderName;
         favrDetails.favrOwnerPhone = fproviderPhone;
         favrDetails.passwordFavr = pwFavr;
+        favrDetails.price = price;
         showDialog(
             context: context,
             barrierDismissible: false,

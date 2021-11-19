@@ -60,8 +60,8 @@ class LoginScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Email',
+                      hintStyle: TextStyle(color: Colors.black54),
                       contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       border: OutlineInputBorder(
@@ -86,8 +86,8 @@ class LoginScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter Password',
+                      hintStyle: TextStyle(color: Colors.black54),
                       isCollapsed: false,
                       isDense: true,
                       contentPadding:
@@ -104,6 +104,7 @@ class LoginScreen extends StatelessWidget {
                   width: size.width * 0.9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      elevation: 4,
                       primary: kPrimaryGreen, // background
                       onPrimary: kPrimaryWhite, // foreground
                       fixedSize:
@@ -133,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                       "Dont have an account?",
                       style: TextStyle(
                         fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     TextButton(
@@ -145,7 +146,7 @@ class LoginScreen extends StatelessWidget {
                           "Register here",
                           style: TextStyle(
                               fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               color: kPrimaryMint),
                         )),
                   ],
