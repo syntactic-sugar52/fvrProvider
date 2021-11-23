@@ -25,159 +25,167 @@ class NotificationDialog extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(5.0),
         ),
-        child: ListView(physics: ClampingScrollPhysics(), children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
+        child: ListView(
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
             children: [
-              sizedBox(15.0, 0.0),
-              Text(
-                "New Favr Request",
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-              ),
-              sizedBox(10.0, 0.0),
-              Text(
-                'NOTE: DO NOT FORGET TO RECORD OR TAKE PICTURES FOR PROOF.',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0XFFD90B14), fontSize: 16),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  sizedBox(15.0, 0.0),
+                  Text(
+                    "New Favr Request",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
+                  ),
+                  sizedBox(10.0, 0.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'DO NOT FORGET TO RECORD OR TAKE PICTURES FOR PROOF.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color(0XFFD90B14), fontSize: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
                       children: [
-                        Text(
-                          "Price: ",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        sizedBox(0.0, 20.0),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              favrDetails.price,
-                              style: TextStyle(fontSize: 18.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Price: ",
+                              style: TextStyle(fontSize: 16.0),
                             ),
+                            sizedBox(0.0, 20.0),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  '₱${favrDetails.price}',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Start here: ",
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                            sizedBox(0.0, 20.0),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  favrDetails.pickupaddress,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "End here: ",
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                            sizedBox(0.0, 20.0),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  favrDetails.dropoffAddress,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        sizedBox(15.0, 0.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Details",
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                            sizedBox(0.0, 20.0),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  favrDetails.details,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  sizedBox(15.0, 0.0),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    'YOU HAVE 40 SECONDS TO ACCEPT',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0XFFD90B14), fontSize: 16),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pink.shade600, // background
+                            onPrimary: kPrimaryWhite, // foreground
+                            fixedSize:
+                                Size(MediaQuery.of(context).size.width / 3, 50),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Decline".toUpperCase(),
+                            style: TextStyle(fontSize: 14.0),
+                          ),
+                        ),
+                        sizedBox(0.0, 10.0),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: kPrimaryGreen, // background
+                                  onPrimary: kPrimaryWhite, // foreground
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width / 3,
+                                      50),
+                                ),
+                                onPressed: () {
+                                  checkAvailability(context);
+                                },
+                                child: Text(
+                                  "Accept".toUpperCase(),
+                                  style: TextStyle(fontSize: 14.0),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Start here: ",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        sizedBox(0.0, 20.0),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              favrDetails.pickupaddress,
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "End here: ",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        sizedBox(0.0, 20.0),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              favrDetails.dropoffAddress,
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    sizedBox(15.0, 0.0),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Details",
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        sizedBox(0.0, 20.0),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              favrDetails.details,
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              sizedBox(15.0, 0.0),
-              Divider(
-                color: Colors.grey,
-              ),
-              Text(
-                'YOU HAVE 40 SECONDS TO ACCEPT',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0XFFD90B14), fontSize: 16),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.pink.shade600, // background
-                        onPrimary: kPrimaryWhite, // foreground
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width / 3, 50),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Decline".toUpperCase(),
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                    sizedBox(0.0, 10.0),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: kPrimaryGreen, // background
-                              onPrimary: kPrimaryWhite, // foreground
-                              fixedSize: Size(
-                                  MediaQuery.of(context).size.width / 3, 50),
-                            ),
-                            onPressed: () {
-                              checkAvailability(context);
-                            },
-                            child: Text(
-                              "Accept".toUpperCase(),
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ]),
+            ]),
       ),
     );
   }
@@ -194,21 +202,24 @@ class NotificationDialog extends StatelessWidget {
       if (reqId == favrDetails.rideRequestId) {
         print('reqId checkAvail');
         print(reqId);
-        requestRef.set("accepted");
-        // prefs.setBool('checkAvailability', true);
-        Methods.disableHomeTabLiveLocationUpdates();
+        requestRef.set("accepted").then((value) {
+          Methods.disableHomeTabLiveLocationUpdates();
+        });
+
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => NewFavrScreen(
                       favrDetails: favrDetails,
                     )));
+        // prefs.setBool('checkAvailability', true);
+
       } else if (reqId == "cancelled") {
         // prefs.setBool('checkAvailability', false);
         displayToastMessage("Favr has been Cancelled");
       } else if (reqId == "timeout") {
         // prefs.setBool('checkAvailability', false);
-        displayToastMessage("Favr has Timed Out");
+        displayToastMessage("Favr has timed out");
       } else {
         // prefs.setBool('checkAvailability', false);
         displayToastMessage("Favr no longer exists");

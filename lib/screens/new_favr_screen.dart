@@ -128,7 +128,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // createIconMarker();
+    createIconMarker();
     return Scaffold(
       backgroundColor: kPrimaryWhite,
       resizeToAvoidBottomInset: true,
@@ -183,11 +183,14 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                           Text(
                             widget.favrDetails.favrOwnerName,
                             style: TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.w700),
+                                fontSize: 20.0, fontWeight: FontWeight.w600),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10.0),
-                            child: Icon(FontAwesomeIcons.phone),
+                            child: Icon(
+                              FontAwesomeIcons.phone,
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),
@@ -205,6 +208,21 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                       sizedBox(10.0, 0.0),
                       Text(
                         widget.favrDetails.passwordFavr,
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w500),
+                      ),
+                      sizedBox(20.0, 0.0),
+                      Divider(color: Colors.grey),
+                      sizedBox(20.0, 0.0),
+
+                      Text(
+                        "The Price: ",
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w500),
+                      ),
+                      sizedBox(10.0, 0.0),
+                      Text(
+                        '₱${widget.favrDetails.price}',
                         style: TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.w500),
                       ),
@@ -312,18 +330,20 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
                               newRequestRef
                                   .child(rideRequestId)
                                   .child("status")
-                                  .set(status);
-                              setState(() {
-                                btnColor = Colors.red;
-                                btnTitle = "End Favr";
+                                  .set(status)
+                                  .whenComplete(() {
+                                setState(() {
+                                  btnColor = Colors.red;
+                                  btnTitle = "End Favr";
+                                });
+                                initTimer();
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        ProgressDialog(
+                                            message: "Please Wait..."),
+                                    barrierDismissible: false);
                               });
-                              initTimer();
-
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      ProgressDialog(message: "Please Wait..."),
-                                  barrierDismissible: false);
                               await getPlaceDirection(widget.favrDetails.pickup,
                                   widget.favrDetails.dropoff);
                               Navigator.pop(context);
@@ -375,238 +395,6 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 0.0,
-          //   left: 8.0,
-          //   right: 8.0,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: BorderRadius.only(
-          //             topLeft: Radius.circular(16.0),
-          //             topRight: Radius.circular(16.0))),
-          //
-          //     child: ListView(
-          //         physics: ClampingScrollPhysics(),
-          //         padding: const EdgeInsets.symmetric(
-          //             horizontal: 24.0, vertical: 20.0),
-          //         shrinkWrap: true,
-          //         children: [
-          //           Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Padding(
-          //                 padding: const EdgeInsets.symmetric(
-          //                     horizontal: 20.0, vertical: 18.0),
-          //                 child: Column(
-          //                   // mainAxisAlignment: MainAxisAlignment.start,
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     Row(
-          //                       mainAxisAlignment:
-          //                           MainAxisAlignment.spaceBetween,
-          //                       children: [
-          //                         Text(
-          //                           widget.favrDetails.favrOwnerName,
-          //                           style: TextStyle(
-          //                               fontSize: 24.0,
-          //                               fontWeight: FontWeight.w700),
-          //                         ),
-          //                         Padding(
-          //                           padding: const EdgeInsets.only(right: 10.0),
-          //                           child: Icon(FontAwesomeIcons.phone),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                     sizedBox(10.0, 0.0),
-          //                     Divider(
-          //                       color: Colors.grey,
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Text(
-          //                       "The Password: ",
-          //                       style: TextStyle(
-          //                           fontSize: 18.0,
-          //                           fontWeight: FontWeight.w600),
-          //                     ),
-          //                     sizedBox(10.0, 0.0),
-          //                     Container(
-          //                       child: Text(
-          //                         widget.favrDetails.passwordFavr,
-          //                         style: TextStyle(
-          //                             fontSize: 18.0,
-          //                             fontWeight: FontWeight.w500,
-          //                             overflow: TextOverflow.ellipsis),
-          //                       ),
-          //                     ),
-          //                     sizedBox(18.0, 0.0),
-          //                     Divider(
-          //                       color: Colors.grey,
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Text(
-          //                       "Start Here: ",
-          //                       style: TextStyle(
-          //                           fontSize: 18.0,
-          //                           fontWeight: FontWeight.w600),
-          //                     ),
-          //                     sizedBox(10.0, 0.0),
-          //                     Container(
-          //                       child: Text(
-          //                         widget.favrDetails.pickupaddress,
-          //                         style: TextStyle(
-          //                             fontSize: 18.0,
-          //                             fontWeight: FontWeight.w500,
-          //                             overflow: TextOverflow.ellipsis),
-          //                       ),
-          //                     ),
-          //                     sizedBox(18.0, 0.0),
-          //                     Divider(
-          //                       color: Colors.grey,
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Text(
-          //                       "End Here: ",
-          //                       style: TextStyle(
-          //                           fontSize: 18.0,
-          //                           fontWeight: FontWeight.w600),
-          //                     ),
-          //                     sizedBox(10.0, 0.0),
-          //                     Container(
-          //                       child: Text(
-          //                         widget.favrDetails.dropoffAddress,
-          //                         style: TextStyle(
-          //                             fontSize: 18.0,
-          //                             fontWeight: FontWeight.w500,
-          //                             overflow: TextOverflow.ellipsis),
-          //                       ),
-          //                     ),
-          //                     sizedBox(18.0, 0.0),
-          //                     Divider(
-          //                       color: Colors.grey,
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Text(
-          //                       "The Favr: ",
-          //                       style: TextStyle(
-          //                           fontSize: 18.0,
-          //                           fontWeight: FontWeight.w600),
-          //                     ),
-          //                     sizedBox(10.0, 0.0),
-          //                     Container(
-          //                       child: Text(
-          //                         widget.favrDetails.details,
-          //                         style: TextStyle(
-          //                             fontSize: 18.0,
-          //                             fontWeight: FontWeight.w500,
-          //                             overflow: TextOverflow.ellipsis),
-          //                       ),
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Divider(
-          //                       color: Colors.grey,
-          //                     ),
-          //                     sizedBox(26.0, 0.0),
-          //                     Row(
-          //                       mainAxisAlignment: MainAxisAlignment.center,
-          //                       children: [
-          //                         Container(
-          //                           // padding: const EdgeInsets.symmetric(
-          //                           //     horizontal: 26.0, vertical: 10),
-          //                           width:
-          //                               MediaQuery.of(context).size.width * 0.8,
-          //                           child: ElevatedButton(
-          //                             onPressed: () async {
-          //                               if (status == "accepted") {
-          //                                 status = "arrived";
-          //                                 String rideRequestId =
-          //                                     widget.favrDetails.rideRequestId;
-          //                                 newRequestRef
-          //                                     .child(rideRequestId)
-          //                                     .child("status")
-          //                                     .set(status);
-          //                                 setState(() {
-          //                                   btnColor = Colors.amberAccent;
-          //                                   btnTitle = "Start Favr";
-          //                                 });
-
-          //                                 showDialog(
-          //                                     context: context,
-          //                                     builder: (BuildContext context) =>
-          //                                         ProgressDialog(
-          //                                             message:
-          //                                                 "Please Wait..."),
-          //                                     barrierDismissible: false);
-          //                                 await getPlaceDirection(
-          //                                     widget.favrDetails.pickup,
-          //                                     widget.favrDetails.dropoff);
-          //                                 Navigator.pop(context);
-          //                               } else if (status == "arrived") {
-          //                                 setState(() {
-          //                                   status = "onride";
-          //                                 });
-
-          //                                 String rideRequestId =
-          //                                     widget.favrDetails.rideRequestId;
-          //                                 newRequestRef
-          //                                     .child(rideRequestId)
-          //                                     .child("status")
-          //                                     .set(status);
-          //                                 setState(() {
-          //                                   btnColor = Colors.red;
-          //                                   btnTitle = "End Favr";
-          //                                 });
-          //                                 initTimer();
-
-          //                                 showDialog(
-          //                                     context: context,
-          //                                     builder: (BuildContext context) =>
-          //                                         ProgressDialog(
-          //                                             message:
-          //                                                 "Please Wait..."),
-          //                                     barrierDismissible: false);
-          //                                 await getPlaceDirection(
-          //                                     widget.favrDetails.pickup,
-          //                                     widget.favrDetails.dropoff);
-          //                                 Navigator.pop(context);
-          //                               } else if (status == "onride") {
-          //                                 endFavr();
-          //                               }
-          //                             },
-          //                             style: ButtonStyle(
-          //                                 shadowColor:
-          //                                     MaterialStateProperty.all(
-          //                                         Colors.grey),
-          //                                 backgroundColor:
-          //                                     MaterialStateProperty.all(
-          //                                         btnColor)),
-          //                             child: Row(
-          //                               mainAxisAlignment:
-          //                                   MainAxisAlignment.center,
-          //                               children: [
-          //                                 Text(
-          //                                   btnTitle.toUpperCase(),
-          //                                   textAlign: TextAlign.center,
-          //                                   style: TextStyle(
-          //                                       color: Colors.white,
-          //                                       fontSize: 22.0,
-          //                                       letterSpacing: 1,
-          //                                       fontWeight: FontWeight.w700),
-          //                                 ),
-          //                               ],
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ]),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -799,10 +587,7 @@ class _NewFavrScreenState extends State<NewFavrScreen> {
     Navigator.pop(context);
     int fareAmount = Methods.calculateRideFare(directionDetails);
     String rideRequestId = widget.favrDetails.rideRequestId;
-    newRequestRef
-        .child(rideRequestId)
-        .child("fares")
-        .set(fareAmount.toString());
+    newRequestRef.child(rideRequestId).child("fare").set(fareAmount.toString());
     newRequestRef.child(rideRequestId).child("status").set("ended");
     providerSubscription.cancel();
     showDialog(

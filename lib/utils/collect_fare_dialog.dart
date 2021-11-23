@@ -26,7 +26,7 @@ class CollectFareDialog extends StatelessWidget {
           children: [
             sizedBox(22.0, 0.0),
             Text(
-              "Fee Recieved",
+              "Payment Recieved",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             sizedBox(22.0, 0.0),
@@ -48,6 +48,7 @@ class CollectFareDialog extends StatelessWidget {
             ),
             sizedBox(16.0, 0.0),
             TextButton(
+                //!add gsheets
                 onPressed: () {},
                 child: Text(
                   'REPORT',
@@ -60,6 +61,7 @@ class CollectFareDialog extends StatelessWidget {
               height: 90,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  elevation: 4,
                   primary: kPrimaryGreen, // background
                   onPrimary: kPrimaryWhite, // foreground
                   fixedSize: Size(MediaQuery.of(context).size.width * 0.9, 50),

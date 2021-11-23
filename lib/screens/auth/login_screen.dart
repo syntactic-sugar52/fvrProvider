@@ -53,6 +53,8 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                     autofocus: false,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
@@ -80,6 +82,8 @@ class LoginScreen extends StatelessWidget {
                     autofocus: false,
                     obscureText: true,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),

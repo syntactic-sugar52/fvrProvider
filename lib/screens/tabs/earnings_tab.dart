@@ -36,7 +36,7 @@ class EarningsTab extends StatelessWidget {
                   sizedBox(10.0, 0.0),
                   sizedBox(10.0, 0.0),
                   Text(
-                    "NOTE: Earnings will be sent to your account every Wednesday of the week",
+                    "Earnings will be sent to your account every Wednesday of the week",
                     style: TextStyle(color: Colors.white, fontSize: 14.0),
                   ),
                 ],

@@ -139,7 +139,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         GoogleMap(
@@ -190,16 +190,31 @@ class _HomeTabState extends State<HomeTab> {
                 value: state,
                 onChanged: (value) {
                   setState(() {
-                    isProviderAvailable = value;
                     state = value;
                   });
                   print(state);
-                  if (isProviderAvailable == true) {
-                    makeDriverOnline();
+                  if (isProviderAvailable != true) {
+                    setState(() {
+                      providerStatusColor = kPrimaryMint;
+                      providerStatusText = "Online ";
+                      state = true;
+                      isProviderAvailable = true;
+                      prefs.setBool('isProviderAvailable', true);
+                      prefs.setString('providerStatusText', "Online ");
+                    });
+                    makeProviderOnline();
                     getLocationLiveUpdates();
                     displayToastMessage("You are Online");
                   } else {
-                    makeDriverOffline();
+                    setState(() {
+                      providerStatusColor = Colors.blueGrey;
+                      providerStatusText = "Offline ";
+                      state = false;
+                      isProviderAvailable = false;
+                      prefs.setBool('isProviderAvailable', false);
+                      prefs.setString('providerStatusText', "Offline ");
+                    });
+                    makeProviderOffline();
                     displayToastMessage("You are Offline");
                   }
                 },
@@ -211,26 +226,18 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  void makeDriverOnline() async {
+  void makeProviderOnline() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    currentPosition = position;
+    setState(() {
+      currentPosition = position;
+    });
     Geofire.initialize("availableProviders");
     Geofire.setLocation(currentFirebaseUser.uid, currentPosition.latitude,
             currentPosition.longitude)
         .whenComplete(() {
-      setState(() {
-        providerStatusColor = kPrimaryMint;
-        providerStatusText = "Online ";
-        state = true;
-        isProviderAvailable = true;
-        prefs.setBool('isProviderAvailable', true);
-        prefs.setString('providerStatusText', "Online ");
-      });
-      if (isProviderAvailable == true) {
-        requestRef.set('searching');
-        requestRef.onValue.listen((event) {});
-      }
+      requestRef.set('searching');
+      requestRef.onValue.listen((event) {});
     });
   }
 
@@ -238,7 +245,7 @@ class _HomeTabState extends State<HomeTab> {
     homeTabSubscription =
         Geolocator.getPositionStream().listen((Position position) {
       currentPosition = position;
-      if (!isProviderAvailable) {
+      if (isProviderAvailable != true) {
         Geofire.setLocation(
             currentFirebaseUser.uid, position.latitude, position.longitude);
         LatLng latLng = LatLng(position.latitude, position.longitude);
@@ -247,21 +254,11 @@ class _HomeTabState extends State<HomeTab> {
     });
   }
 
-  void makeDriverOffline() {
+  void makeProviderOffline() {
     Geofire.removeLocation(currentFirebaseUser.uid).whenComplete(() {
-      setState(() {
-        providerStatusColor = Colors.blueGrey;
-        providerStatusText = "Offline ";
-        state = false;
-        isProviderAvailable = false;
-        prefs.setBool('isProviderAvailable', false);
-        prefs.setString('providerStatusText', "Offline ");
-      });
-      if (isProviderAvailable == false) {
-        requestRef.onDisconnect();
-        requestRef.remove();
-        displayToastMessage("You are Offline");
-      }
+      requestRef.onDisconnect();
+      requestRef.remove();
+      displayToastMessage("You are Offline");
     });
   }
 }

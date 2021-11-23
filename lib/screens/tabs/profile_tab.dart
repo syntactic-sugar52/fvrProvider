@@ -6,6 +6,7 @@ import 'package:fprovider_app/constants/colors.dart';
 import 'package:fprovider_app/constants/widgets.dart';
 import 'package:fprovider_app/main.dart';
 import 'package:fprovider_app/screens/auth/login_screen.dart';
+import 'package:fprovider_app/screens/profile_edit.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({Key key}) : super(key: key);
@@ -22,9 +23,21 @@ class ProfileTab extends StatelessWidget {
           favrProvidersInfo.name,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
         ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileEdit()));
+              },
+              child: Text(
+                'EDIT',
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ))
+        ],
       ),
       body: SafeArea(
         child: ListView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             Column(
               children: [

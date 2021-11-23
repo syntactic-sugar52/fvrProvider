@@ -7,7 +7,6 @@ import 'package:fprovider_app/screens/mainscreen.dart';
 import 'package:fprovider_app/utils/progress_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../main.dart';
-import '../car_info_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String idScreen = "register";
@@ -120,6 +119,8 @@ class RegistrationScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                     autofocus: false,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
@@ -146,6 +147,8 @@ class RegistrationScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                     autofocus: false,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
@@ -173,6 +176,8 @@ class RegistrationScreen extends StatelessWidget {
                     autofocus: false,
                     obscureText: true,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1.0),
                       ),
