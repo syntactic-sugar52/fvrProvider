@@ -43,12 +43,13 @@ dependencies:
   flutter_polyline_points:
   maps_toolkit:
   animated_text_kit:
-  rubber:
+  firebase_analytics:
   smooth_star_rating: ^1.1.1
   flutter_geofire: ^1.0.3
   firebase_messaging: ^7.0.3
   intl:
   geolocator:
+  gsheets:
   shared_preferences:
   http:
 dev_dependencies:

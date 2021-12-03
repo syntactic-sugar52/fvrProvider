@@ -9,6 +9,7 @@ import 'package:fprovider_app/screens/auth/registration_screen.dart';
 
 import 'package:fprovider_app/screens/mainscreen.dart';
 import 'package:fprovider_app/screens/new_favr_screen.dart';
+import 'package:fprovider_app/sheetsapi/reportsheet.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -18,6 +19,7 @@ import 'data_handler/app_data.dart';
 SharedPreferences prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ReportSheetsApi.init();
   await Firebase.initializeApp();
   prefs = await SharedPreferences.getInstance();
   currentFirebaseUser = FirebaseAuth.instance.currentUser;

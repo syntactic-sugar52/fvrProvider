@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fprovider_app/constants/colors.dart';
 import 'package:fprovider_app/constants/widgets.dart';
+import 'package:fprovider_app/screens/report.dart';
 import 'package:fprovider_app/services/methods.dart';
 
 class CollectFareDialog extends StatelessWidget {
@@ -49,7 +50,10 @@ class CollectFareDialog extends StatelessWidget {
             sizedBox(16.0, 0.0),
             TextButton(
                 //!add gsheets
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Report()));
+                },
                 child: Text(
                   'REPORT',
                   style: TextStyle(fontSize: 16, letterSpacing: 1),

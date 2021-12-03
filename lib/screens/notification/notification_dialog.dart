@@ -157,29 +157,7 @@ class NotificationDialog extends StatelessWidget {
                           ),
                         ),
                         sizedBox(0.0, 10.0),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: kPrimaryGreen, // background
-                                  onPrimary: kPrimaryWhite, // foreground
-                                  fixedSize: Size(
-                                      MediaQuery.of(context).size.width / 3,
-                                      50),
-                                ),
-                                onPressed: () {
-                                  checkAvailability(context);
-                                },
-                                child: Text(
-                                  "Accept".toUpperCase(),
-                                  style: TextStyle(fontSize: 14.0),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        acceptButton(context)
                       ],
                     ),
                   ),
@@ -190,6 +168,27 @@ class NotificationDialog extends StatelessWidget {
     );
   }
 
+  Padding acceptButton(context) => Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryGreen, // background
+                onPrimary: kPrimaryWhite, // foreground
+                fixedSize: Size(MediaQuery.of(context).size.width / 3, 50),
+              ),
+              onPressed: () {
+                checkAvailability(context);
+              },
+              child: Text(
+                "Accept".toUpperCase(),
+                style: TextStyle(fontSize: 14.0),
+              ),
+            )
+          ],
+        ),
+      );
   void checkAvailability(context) {
     requestRef.once().then((DataSnapshot dataSnapshot) {
       Navigator.pop(context);
